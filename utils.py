@@ -10,15 +10,17 @@ def logger(name):
     def _logger(some_function):
         def new_function(*args, **kwargs):
             file = open(f'{name}.txt', 'a+')
+            result = some_function(*args, **kwargs)
             arguments = None
             if args:
                 arguments = args
             elif kwargs:
                 arguments = kwargs
             else:
-                file.write(f'{datetime.now()}, {some_function.__name__}, {some_function(*args, **kwargs)}\n')
-            file.write(f'{datetime.now()}, {some_function.__name__}, {arguments}, {some_function(*args, **kwargs)}\n')
+                file.write(f'{datetime.now()}, {some_function.__name__}, {result}\n')
+            file.write(f'{datetime.now()}, {some_function.__name__}, {arguments}, {result}\n')
             file.close()
+            return result
 
         return new_function
 
